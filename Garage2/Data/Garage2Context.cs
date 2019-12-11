@@ -16,6 +16,5 @@ namespace Garage2.Models
 
         public DbSet<Garage2.Models.Vehicle> Vehicle { get; set; }
 
-        public DbSet<Garage2.Models.VehicleViewModel> VehicleViewModel { get; set; }
     }
 }

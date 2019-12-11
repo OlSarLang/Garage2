@@ -11,6 +11,7 @@ namespace Garage2.Models
         public int Id { get; set; }
         public string RegNr { get; set; }
         public string Manufacturer { get; set; }
-        public int Type { get; set; }
+        public TypeOfVehicle Type { get; set; }
+        public DateTime BeginParking { get; set; }
     }
 }

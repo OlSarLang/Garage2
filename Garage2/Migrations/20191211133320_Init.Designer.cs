@@ -4,14 +4,16 @@ using Garage2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Garage2.Migrations
 {
     [DbContext(typeof(Garage2Context))]
-    partial class Garage2ContextModelSnapshot : ModelSnapshot
+    [Migration("20191211133320_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace Garage2.Migrations
 
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndParking")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()

@@ -53,7 +53,7 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type,BeginParking")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type,BeginParking")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -110,7 +110,7 @@ namespace Garage2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetVehicleViewModels));
             }
             return View(vehicle);
         }
@@ -141,7 +141,7 @@ namespace Garage2.Controllers
             var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetVehicleViewModels));
         }
 
         private bool VehicleExists(int id)
@@ -165,7 +165,8 @@ namespace Garage2.Controllers
                 Id = v.Id,
                 RegNr = v.RegNr,
                 Manufacturer = v.Manufacturer,
-                Type = v.Type
+                Type = v.Type,
+                BeginParking = v.BeginParking
             });
             return View(model);
         }
