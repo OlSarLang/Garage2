@@ -1,0 +1,10 @@
+﻿body {
+}
+
+tbody tr:nth-child(even) {
+    background-color: whitesmoke;
+}
+
+thead {
+    background-color: whitesmoke;
+}

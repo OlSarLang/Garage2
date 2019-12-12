@@ -89,7 +89,7 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type,BeginParking")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -100,6 +100,9 @@ namespace Garage2.Controllers
             {
                 try
                 {
+                    var oldVehicle = _context.Vehicle.AsNoTracking().Where(ov => ov.Id == id).FirstOrDefault();
+                    vehicle.BeginParking = oldVehicle.BeginParking;
+                    
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
                 }

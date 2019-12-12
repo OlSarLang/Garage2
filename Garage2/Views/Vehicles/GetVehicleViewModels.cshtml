@@ -3,11 +3,22 @@
 @{
     ViewData["Title"] = "GetVehicleViewModels";
 }
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/vehicles.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
 
 <h1>Parked Vehicles</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="float-left text-dark">
+        <button class="btn btn-success" autofocus="autofocus" tabindex="0">
+            Park
+        </button>
+    </a>
+    <a asp-action="GetVehicleViewModels" class="float-right">
+        <i class="fa fa-refresh text-primary" aria-hidden="true" tabindex="1"></i>
+    </a>
 </p>
 <table class="table">
     <thead>
@@ -29,25 +40,34 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegNr)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginParking)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginParking)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="text-dark">
+                        Edit
+                        <i class="fa fa-pencil-square-o text-primary" aria-hidden="true"></i>
+                    </a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="text-dark">
+                        Details
+                        <i class="fa fa-list-alt text-info" aria-hidden="true"></i>
+                    </a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="text-dark">
+                        Depart
+                        <i class="fa fa-caret-square-o-right text-danger" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
 }
     </tbody>
 </table>
