@@ -4,7 +4,7 @@
     ViewData["Title"] = "GetVehicleViewModels";
 }
 
-<h1>Parked Vehicles</h1>
+<h1>GetVehicleViewModels</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                Time of parking:
+                @Html.DisplayNameFor(model => model.BeginParking)
             </th>
             <th></th>
         </tr>
