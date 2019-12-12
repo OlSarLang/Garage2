@@ -6,14 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage2.Models;
-using Garage2.Extensions;
 
 namespace Garage2.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly Garage2Context _context;
-        private MyExtensions _extensions = new MyExtensions();
 
         public VehiclesController(Garage2Context context)
         {
@@ -55,12 +53,10 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type,BeginParking")] Vehicle vehicle)
         {
-            var time = DateTime.Now;
             if (ModelState.IsValid)
             {
-                vehicle.BeginParking = _extensions.RoundDateTime(time);
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(GetVehicleViewModels));

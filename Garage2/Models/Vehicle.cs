@@ -26,7 +26,7 @@ namespace Garage2.Models
         [Required]
         public TypeOfVehicle Type { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Display(Name = "Begun parking")]
         public DateTime BeginParking { get; set; }
     }
