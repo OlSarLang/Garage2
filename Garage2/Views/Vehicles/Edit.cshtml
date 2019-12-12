@@ -16,46 +16,46 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id"/>
             <div class="form-group">
                 <label asp-for="RegNr" class="control-label"></label>
-                <input asp-for="RegNr" class="form-control" />
+                <input asp-for="RegNr" class="form-control" autofocus="autofocus" tabindex="1"/>
                 <span asp-validation-for="RegNr" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
+                <input asp-for="Color" class="form-control" tabindex="2"/>
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
+                <input asp-for="Model" class="form-control" tabindex="3"/>
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
+                <input asp-for="Manufacturer" class="form-control" tabindex="4"/>
                 <span asp-validation-for="Manufacturer" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NOWheels" class="control-label"></label>
-                <input asp-for="NOWheels" class="form-control" />
+                <input asp-for="NOWheels" class="form-control" tabindex="5"/>
                 <span asp-validation-for="NOWheels" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<TypeOfVehicle>()"></select>
+                <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<TypeOfVehicle>()" tabindex="6"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Save" class="btn btn-success" tabindex="7"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="GetVehicleViewModels">Back to List</a>
+    <a asp-action="GetVehicleViewModels" tabindex="8">Back to List</a>
 </div>
 
 @section Scripts {

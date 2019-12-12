@@ -100,6 +100,9 @@ namespace Garage2.Controllers
             {
                 try
                 {
+                    var oldVehicle = _context.Vehicle.AsNoTracking().Where(ov => ov.Id == id).FirstOrDefault();
+                    vehicle.BeginParking = oldVehicle.BeginParking;
+                    
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
                 }
