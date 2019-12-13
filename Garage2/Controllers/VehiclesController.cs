@@ -144,7 +144,28 @@ namespace Garage2.Controllers
                 return NotFound();
             }
 
-            return View(vehicle);
+            //--
+            var time = _extensions.RoundDateTime(DateTime.Now);
+            TimeSpan diff = time - vehicle.BeginParking;
+            double period = diff.TotalHours;
+            double price = 40 * period;
+            //--
+            UnparkInfoViewModel model = new UnparkInfoViewModel
+            {
+                        Id = vehicle.Id,
+                        RegNr = vehicle.RegNr,
+                        Manufacturer = vehicle.Manufacturer,
+                        Type = vehicle.Type,
+                        NOWheels = vehicle.NOWheels,
+                        Color = vehicle.Color,
+                        Model = vehicle.Model,
+                        BeginParking = vehicle.BeginParking,
+                        EndParking = time,
+                        Period =  period,
+                        Price = price
+            };
+
+            return View(model);
         }
 
         // POST: Vehicles/Delete/5
