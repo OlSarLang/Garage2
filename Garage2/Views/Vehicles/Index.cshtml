@@ -17,12 +17,12 @@
         </button>
     </a>
     <a asp-action="Index" class="float-right">
-        <i class="fa fa-refresh text-primary" aria-hidden="true" tabindex="1"></i>
+        <i class="fa fa-refresh text-primary" style="font-size: 30px;" aria-hidden="true" tabindex="1"></i>
     </a>
 </p>
 
 <form asp-action="Filter">
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" style="padding-top: 16px;">
         <input type="text" asp-for="RegNr" class="form-control" placeholder="Search registration" />
         <div class="input-group-append">
             <select asp-for="Type" asp-items="@Model.Types" class="form-control">

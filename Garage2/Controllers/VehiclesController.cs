@@ -148,6 +148,10 @@ namespace Garage2.Controllers
             var time = _extensions.RoundDateTime(DateTime.Now);
             TimeSpan diff = time - vehicle.BeginParking;
             double period = diff.TotalHours;
+            if(period < 1)
+            {
+                period = 1;
+            }
             double price = 40 * period;
             //--
             UnparkInfoViewModel model = new UnparkInfoViewModel
@@ -176,12 +180,43 @@ namespace Garage2.Controllers
             var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Receipt), vehicle);
         }
 
         private bool VehicleExists(int id)
         {
             return _context.Vehicle.Any(e => e.Id == id);
+        }
+
+        public ActionResult Print()
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult Receipt(Vehicle vehicle)
+        {
+            //--
+            var time = _extensions.RoundDateTime(DateTime.Now);
+            TimeSpan diff = time - vehicle.BeginParking;
+            double period = diff.TotalHours;
+            double price = 40 * period;
+            //--
+            UnparkInfoViewModel model = new UnparkInfoViewModel
+            {
+                Id = vehicle.Id,
+                RegNr = vehicle.RegNr,
+                Manufacturer = vehicle.Manufacturer,
+                Type = vehicle.Type,
+                NOWheels = vehicle.NOWheels,
+                Color = vehicle.Color,
+                Model = vehicle.Model,
+                BeginParking = vehicle.BeginParking,
+                EndParking = time,
+                Period = period,
+                Price = price
+            };
+
+            return View(model);
         }
 
         //CUSTOM ACTIONRESULTS
