@@ -1,0 +1,104 @@
+﻿@model Garage2.Models.UnparkInfoViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+    <head>
+        <link rel="stylesheet" type="text/css" media="screen, print" href="~/css/vehicles.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+
+@{ 
+    double hourPrice = @Model.Price / @Model.Period;
+}
+<div class="container" id="receipt">
+    <div class="card">
+        <div class="card-header">
+            <h1>Invoice @Model.EndParking.ToString("yyyyMMdd")-@Model.RegNr</h1>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RegNr)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Color)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Manufacturer)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Model)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Type)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.RegNr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Manufacturer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Type)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-4 col-sm-5">
+
+                </div>
+
+                <div class="col-lg-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                            <tr>
+                                <td class="left">
+                                    <strong>Price/hr</strong>
+                                </td>
+                                <td class="right">SEK @hourPrice:-</td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>Time parked</strong>
+                                </td>
+                                <td class="right">@Model.Period</td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>Total</strong>
+                                </td>
+                                <td class="right">
+                                    <strong>SEK @Model.Price:-</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <a class="btn btn-warning d-print-none" style="float:left;" href="javascript:window.print()">Print Receipt</a>
+
+    <form asp-action="Index" style="float:right;" class="d-print-none">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Continue" class="btn btn-success" autofocus="autofocus" tabindex="0" />
+    </form>

@@ -8,3 +8,16 @@ tbody tr:nth-child(even) {
 thead {
     background-color: whitesmoke;
 }
+
+
+@media print {
+    .no-print, -no-print *{
+        display: none !important;
+    }
+}
+
+@media print {
+    .hidden-print {
+        display: none !important;
+    }
+}
