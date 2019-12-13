@@ -23,7 +23,14 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vehicle.ToListAsync());
+            var vehicles = await _context.Vehicle.ToListAsync();
+
+            var model = new VehicleViewModel()
+            {
+                Vehicles = vehicles,
+                Types = await GetTypesAsync()
+            };
+            return View(model);
         }
 
         // GET: Vehicles/Details/5
@@ -63,7 +70,7 @@ namespace Garage2.Controllers
                 vehicle.BeginParking = _extensions.RoundDateTime(time);
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(GetVehicleViewModels));
+                return RedirectToAction(nameof(Index));
             }
             return View(vehicle);
         }
@@ -117,7 +124,7 @@ namespace Garage2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(GetVehicleViewModels));
+                return RedirectToAction(nameof(Index));
             }
             return View(vehicle);
         }
@@ -148,7 +155,7 @@ namespace Garage2.Controllers
             var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(GetVehicleViewModels));
+            return RedirectToAction(nameof(Index));
         }
 
         private bool VehicleExists(int id)
@@ -157,25 +164,54 @@ namespace Garage2.Controllers
         }
 
         //CUSTOM ACTIONRESULTS
-        [HttpGet]
-        public ActionResult GetVehicleViewModels()
+        //[HttpGet]
+        //public ActionResult GetVehicleViewModels()
+        //{
+        //    var vehicles = from v in _context.Vehicle select v;
+
+        //    IEnumerable<VehicleViewModel> model = vehicles.Select(v => new VehicleViewModel
+        //    {
+        //        Id = v.Id,
+        //        RegNr = v.RegNr,
+        //        Manufacturer = v.Manufacturer,
+        //        Type = v.Type,
+        //        BeginParking = v.BeginParking
+        //    });
+        //    return View(nameof(Index), model);
+        //}
+
+        //Filters
+    private async Task<IEnumerable<SelectListItem>> GetTypesAsync()
         {
-            var vehicles = from v in _context.Vehicle select v;
+            return await _context.Vehicle
+                .Select(g => g.Type)
+                .Distinct()
+                .Select(m => new SelectListItem
+                {
+                    Text = m.ToString(),
+                    Value = m.ToString()
 
-            //if (!String.IsNullOrEmpty(category))
-            //{
-            //  products = _context.Product.Where(p => p.Category == category);
-            //}
+                })
+                .ToListAsync();
+        }
 
-            IEnumerable<VehicleViewModel> model = vehicles.Select(v => new VehicleViewModel
+        public async Task<IActionResult> Filter(VehicleViewModel viewModel)
+        {
+            var vehicles = string.IsNullOrWhiteSpace(viewModel.RegNr) ?
+                await _context.Vehicle.ToListAsync() :
+                await _context.Vehicle.Where(v => v.RegNr == viewModel.RegNr).ToListAsync();
+
+            vehicles = viewModel.Type == null ?
+               vehicles :
+               vehicles.Where(v => v.Type == viewModel.Type).ToList();
+
+            var model = new VehicleViewModel()
             {
-                Id = v.Id,
-                RegNr = v.RegNr,
-                Manufacturer = v.Manufacturer,
-                Type = v.Type,
-                BeginParking = v.BeginParking
-            });
-            return View(model);
+                Vehicles = vehicles,
+                Types = await GetTypesAsync()
+            };
+
+            return View(nameof(Index), model);
         }
     }
 }

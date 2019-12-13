@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Garage2.Models.VehicleViewModel>
+﻿@model IEnumerable<Garage2.Models.Vehicle>
 
 @{
     ViewData["Title"] = "GetVehicleViewModels";
@@ -8,18 +8,6 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
 
-<h1>Parked Vehicles</h1>
-
-<p>
-    <a asp-action="Create" class="float-left text-dark">
-        <button class="btn btn-success" autofocus="autofocus" tabindex="0">
-            Park
-        </button>
-    </a>
-    <a asp-action="GetVehicleViewModels" class="float-right">
-        <i class="fa fa-refresh text-primary" aria-hidden="true" tabindex="1"></i>
-    </a>
-</p>
 <table class="table">
     <thead>
         <tr>
