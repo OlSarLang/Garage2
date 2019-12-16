@@ -1,0 +1,49 @@
+﻿@model Garage2.Models.GrageStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/vehicles.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+
+<h1>Vehicle Details</h1>
+
+<div>
+    <hr />
+    <div class="card" style="padding: 10px;">
+        <dl class="row">
+            <dt class="col-sm-5">
+            The number of all vehicles:            
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.VehicleNum)
+            </dd>
+            <dt class="col-sm-5">
+                The number of all wheels:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.WheelsNum)
+            </dd>
+            <dt class="col-sm-5">
+                Total parking period (Hours):
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.TotalVehiclesPeriod)
+            </dd>
+            <dt class="col-sm-5">
+                Total price (Kr):
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.TotalPrice):-
+            </dd>
+
+        </dl>
+    </div>
+</div>
+<div>
+    
+    <a asp-action="Index">Back to List</a>
+</div>

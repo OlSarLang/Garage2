@@ -64,15 +64,15 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
         {
-            var time = DateTime.Now;
-            if (ModelState.IsValid)
-            {
-                vehicle.BeginParking = _extensions.RoundDateTime(time);
-                _context.Add(vehicle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(vehicle);
+                var time = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    vehicle.BeginParking = _extensions.RoundDateTime(time);
+                    _context.Add(vehicle);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(vehicle);
         }
 
         // GET: Vehicles/Edit/5
@@ -269,5 +269,49 @@ namespace Garage2.Controllers
 
             return View(nameof(Index), model);
         }
+
+        public async Task<IActionResult> Statistics()
+        {
+            var vehicles = await _context.Vehicle.ToListAsync();
+
+            var model = new VehicleViewModel()
+            {
+                Vehicles = vehicles,
+                Types = await GetTypesAsync()
+            };
+
+            //-------------------------------------------------------------------
+            var time = _extensions.RoundDateTime(DateTime.Now);
+            TimeSpan diff;
+            double period;
+
+
+            // number of vehicle
+            int vehicleNum = model.Vehicles.Count();
+
+            int wheelsNum = 0;
+            double allPeriod = 0;
+            double totalPrice = 0;
+            foreach (var vehicle in model.Vehicles)
+            {
+                wheelsNum = wheelsNum + vehicle.NOWheels; //number of wheels
+
+                diff = time - vehicle.BeginParking;
+                period = diff.TotalHours;
+                if (period < 1)
+                {
+                    period = 1;
+                }
+                allPeriod = allPeriod + period; // total current parking vehicles period
+
+                totalPrice = 40 * allPeriod;
+            }
+
+            var statististcsModel = new GrageStatisticsViewModel(vehicleNum, wheelsNum, allPeriod, totalPrice);
+
+            return View(statististcsModel);
+        }
+
     }
 }
+
