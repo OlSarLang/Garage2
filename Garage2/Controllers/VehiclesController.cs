@@ -13,7 +13,6 @@ namespace Garage2.Controllers
     public class VehiclesController : Controller
     {
         private readonly Garage2Context _context;
-        private MyExtensions _extensions = new MyExtensions();
 
         public VehiclesController(Garage2Context context)
         {
@@ -51,23 +50,23 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
-        // GET: Vehicles/Create
-        public IActionResult Create()
+        // GET: Vehicles/Park
+        public IActionResult Park()
         {
             return View();
         }
 
-        // POST: Vehicles/Create
+        // POST: Vehicles/Park
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
+        public async Task<IActionResult> Park([Bind("Id,RegNr,Color,Model,Manufacturer,NOWheels,Type")] Vehicle vehicle)
         {
             var time = DateTime.Now;
             if (ModelState.IsValid)
             {
-                vehicle.BeginParking = _extensions.RoundDateTime(time);
+                vehicle.BeginParking = time.RoundDateTime();
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -145,7 +144,7 @@ namespace Garage2.Controllers
             }
 
             //--
-            var time = _extensions.RoundDateTime(DateTime.Now);
+            var time = DateTime.Now.RoundDateTime();
             TimeSpan diff = time - vehicle.BeginParking;
             double period = diff.TotalHours;
             if(period < 1)
@@ -153,6 +152,7 @@ namespace Garage2.Controllers
                 period = 1;
             }
             double price = 40 * period;
+
             //--
             UnparkInfoViewModel model = new UnparkInfoViewModel
             {
@@ -196,9 +196,13 @@ namespace Garage2.Controllers
         public ActionResult Receipt(Vehicle vehicle)
         {
             //--
-            var time = _extensions.RoundDateTime(DateTime.Now);
+            var time = DateTime.Now.RoundDateTime();
             TimeSpan diff = time - vehicle.BeginParking;
             double period = diff.TotalHours;
+            if (period < 1)
+            {
+                period = 1;
+            }
             double price = 40 * period;
             //--
             UnparkInfoViewModel model = new UnparkInfoViewModel
@@ -268,6 +272,75 @@ namespace Garage2.Controllers
             };
 
             return View(nameof(Index), model);
+        }
+
+        public async Task<IActionResult> Statistics()
+        {
+            var vehicles = await _context.Vehicle.ToListAsync();
+
+            var amountSedan = 0;
+            var amountSUV = 0;
+            var amountMC = 0;
+            var amountBus = 0;
+            var amountLimo = 0;
+            var amountWheels = 0;
+
+            var totalHours = 0;
+            var totalPrice = 0;
+
+            var time = DateTime.Now.RoundDateTime();
+            
+
+            foreach (var v in vehicles) {
+                TimeSpan diff = time - v.BeginParking;
+                double period = diff.TotalHours;
+
+                if (period < 1)
+                {
+                    period = 1;
+                }
+
+                double price = 40 * period;
+
+                totalHours += (int) period;
+                totalPrice += (int) price;
+
+                switch (v.Type)
+                {
+                    case TypeOfVehicle.Sedan:
+                        amountSedan++;
+                        break;
+                    case TypeOfVehicle.SUV:
+                        amountSUV++;
+                        break;
+                    case TypeOfVehicle.MC:
+                        amountMC++;
+                        break;
+                    case TypeOfVehicle.Bus:
+                        amountBus++;
+                        break;
+                    case TypeOfVehicle.Limo:
+                        amountLimo++;
+                        break;
+                }
+                amountWheels += v.NOWheels;
+            }
+
+
+            var stats = new StatisticsViewModel()
+            {
+                TotalWheels = amountWheels,
+                TotalVehicles = vehicles.Count(),
+                AmountSedan = amountSedan,
+                AmountSUV = amountSUV,
+                AmountMC = amountMC,
+                AmountBus = amountBus,
+                AmountLimo = amountLimo,
+                TotalHours = totalHours,
+                TotalPrice = totalPrice
+            };
+            return View(stats);
+
         }
     }
 }

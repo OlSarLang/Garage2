@@ -14,18 +14,56 @@
 }
 <div class="container" id="receipt">
     <div class="card">
+        <!-- Footer -->
+        <footer class="page-footer font-small">
+
+            <!-- Footer Links -->
+            <div class="container text-center text-md-left mt-1">
+
+                <!-- Grid row -->
+                <div class="row mt-1 dark-grey-text">
+
+                    <!-- Grid column -->
+                    <div class="col-md-6" style="float: left;">
+                        <h4>
+                            Vehicular Parking Agency.Co
+                        </h4>
+                    </div>
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 text-right">
+                        <!-- Links -->
+                        <p>
+                            Liljeholmen, Stockholm 100 10, SE
+                        </p>
+                        <p>
+                            info@example.com
+                        </p>
+                        <p>
+                            + 01 234 567 88
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Footer Links -->
+
+        </footer>
+        <!-- Footer -->
         <div class="card-header">
-            <h1>Invoice @Model.EndParking.ToString("yyyyMMdd")-@Model.RegNr</h1>
+            <h2>Invoice @Model.EndParking.ToString("yyyyMMdd")-@Model.RegNr</h2>
         </div>
         <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.RegNr)
+                            Registration
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Color)
+                            Color
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Manufacturer)
@@ -34,7 +72,7 @@
                             @Html.DisplayNameFor(model => model.Model)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Type)
+                            Vehicle Type
                         </th>
                         <th></th>
                     </tr>
@@ -71,11 +109,11 @@
                                 <td class="left">
                                     <strong>Price/hr</strong>
                                 </td>
-                                <td class="right">SEK @hourPrice:-</td>
+                                <td class="right">SEK @hourPrice:-/hr</td>
                             </tr>
                             <tr>
                                 <td class="left">
-                                    <strong>Time parked</strong>
+                                    <strong>Hours parked</strong>
                                 </td>
                                 <td class="right">@Model.Period</td>
                             </tr>
@@ -93,7 +131,10 @@
             </div>
         </div>
 
-
+        <div class="footer-copyright text-center text-black-50 py-3">
+            © 2019 Copyright:
+            <a class="dark-grey-text" href="google.com">Website.com here</a>
+        </div>
     </div>
 
     <a class="btn btn-warning d-print-none" style="float:left;" href="javascript:window.print()">Print Receipt</a>
