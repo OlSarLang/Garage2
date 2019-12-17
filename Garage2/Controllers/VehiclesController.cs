@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage2.Models;
 using Garage2.Extensions;
+using Microsoft.Extensions.Configuration;
 
 namespace Garage2.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly Garage2Context _context;
+        private readonly IConfiguration configuration;
         private MyExtensions _extensions = new MyExtensions();
 
-        public VehiclesController(Garage2Context context)
+        public VehiclesController(Garage2Context context, IConfiguration configuration)
         {
             _context = context;
+            this.configuration = configuration;
         }
 
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
+            var capacity = configuration.GetValue<int>("GarageSettings:Capacity");
             var vehicles = await _context.Vehicle.ToListAsync();
 
             var model = new VehicleViewModel()

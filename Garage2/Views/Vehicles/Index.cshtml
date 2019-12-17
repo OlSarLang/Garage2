@@ -1,4 +1,5 @@
 ﻿@model Garage2.Models.VehicleViewModel
+@inject Garage2.Services.ISettings settings;
 
 @{
     ViewData["Title"] = "Index";
@@ -9,8 +10,11 @@
     </head>
 
 <h1>Parked Vehicles</h1>
+<p><mark>Garage Capacity: @settings.Capacity</mark></p>
+<p><mark>Number of parked vehicles: @settings.NrOfParkedVehicle</mark></p>
 
 <p>
+  
     <a asp-action="Create" class="float-left text-dark">
         <button class="btn btn-success" autofocus="autofocus" tabindex="0">
             Park

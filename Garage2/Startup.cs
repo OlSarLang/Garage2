@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Garage2.Models;
+using Garage2.Services;
 
 namespace Garage2
 {
@@ -29,6 +30,8 @@ namespace Garage2
 
             services.AddDbContext<Garage2Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Garage2Context")));
+
+            services.AddTransient<ISettings, GarageSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
