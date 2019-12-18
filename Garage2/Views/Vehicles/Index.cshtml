@@ -21,9 +21,7 @@
             Statistics
         </button>
     </a>
-    <a asp-action="Index" class="float-right">
-        <i class="fa fa-refresh text-primary" style="font-size: 30px;" aria-hidden="true" tabindex="3"></i>
-    </a>
+    
 </p>
 
 <form asp-action="Filter">
@@ -39,5 +37,8 @@
         </div>
     </div>
 </form>
+<a asp-action="Index" class="float-right">
+    <i class="fa fa-refresh text-primary" style="font-size: 25px;" aria-hidden="true" tabindex="3"></i>
+</a>
 
 <partial name="GetVehicleViewModels" model="@Model.Vehicles"/>
