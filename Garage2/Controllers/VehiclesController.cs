@@ -259,7 +259,7 @@ namespace Garage2.Controllers
         {
             var vehicles = string.IsNullOrWhiteSpace(viewModel.RegNr) ?
                 await _context.Vehicle.ToListAsync() :
-                await _context.Vehicle.Where(v => v.RegNr == viewModel.RegNr).ToListAsync();
+                await _context.Vehicle.Where(v => v.RegNr.ToLower().Contains(viewModel.RegNr.ToLower())).ToListAsync();
 
             vehicles = viewModel.Type == null ?
                vehicles :
