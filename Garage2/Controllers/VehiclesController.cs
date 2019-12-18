@@ -146,12 +146,12 @@ namespace Garage2.Controllers
             //--
             var time = DateTime.Now.RoundDateTime();
             TimeSpan diff = time - vehicle.BeginParking;
-            double period = diff.TotalHours;
+            double period = diff.TotalMinutes;
             if(period < 1)
             {
                 period = 1;
             }
-            double price = 40 * period;
+            double price = 1.5 * period;
 
             //--
             UnparkInfoViewModel model = new UnparkInfoViewModel
@@ -198,12 +198,12 @@ namespace Garage2.Controllers
             //--
             var time = DateTime.Now.RoundDateTime();
             TimeSpan diff = time - vehicle.BeginParking;
-            double period = diff.TotalHours;
+            double period = diff.TotalMinutes;
             if (period < 1)
             {
                 period = 1;
             }
-            double price = 40 * period;
+            double price = 1.5 * period;
             //--
             UnparkInfoViewModel model = new UnparkInfoViewModel
             {
@@ -285,7 +285,7 @@ namespace Garage2.Controllers
             var amountLimo = 0;
             var amountWheels = 0;
 
-            var totalHours = 0;
+            var totalMinutes = 0;
             var totalPrice = 0;
 
             var time = DateTime.Now.RoundDateTime();
@@ -293,16 +293,16 @@ namespace Garage2.Controllers
 
             foreach (var v in vehicles) {
                 TimeSpan diff = time - v.BeginParking;
-                double period = diff.TotalHours;
+                double period = diff.TotalMinutes;
 
                 if (period < 1)
                 {
                     period = 1;
                 }
 
-                double price = 40 * period;
+                double price = 1.5 * period;
 
-                totalHours += (int) period;
+                totalMinutes += (int) period;
                 totalPrice += (int) price;
 
                 switch (v.Type)
@@ -336,7 +336,7 @@ namespace Garage2.Controllers
                 AmountMC = amountMC,
                 AmountBus = amountBus,
                 AmountLimo = amountLimo,
-                TotalHours = totalHours,
+                TotalMinutes = totalMinutes,
                 TotalPrice = totalPrice
             };
             return View(stats);
