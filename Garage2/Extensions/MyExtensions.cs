@@ -10,17 +10,17 @@ namespace Garage2.Extensions
     {
         public static DateTime RoundDateTime(this DateTime dt)
         {
-            DateTime rounded = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
+            DateTime rounded = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
             Debug.WriteLine($"{dt}");
             Debug.WriteLine($"{rounded}");
-            if(dt.Minute < 30)
+            if(dt.Second < 30)
             {
-                rounded = rounded.AddMinutes(-dt.Minute);
+                rounded = rounded.AddSeconds(-dt.Second);
             }
-            if(dt.Minute >= 30)
+            if(dt.Second >= 30)
             {
-                rounded = rounded.AddHours(1);
-                rounded = rounded.AddMinutes(-dt.Minute);
+                rounded = rounded.AddMinutes(1);
+                rounded = rounded.AddSeconds(-dt.Second);
             }
             return rounded;
         }

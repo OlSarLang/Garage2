@@ -19,7 +19,7 @@ namespace Garage2.Models
         public int AmountLimo { get; set; }
         public int TotalWheels { get; set; }
         public int TotalVehicles { get; set; }
-        public int TotalHours { get; set; }
+        public int TotalMinutes { get; set; }
         public int TotalPrice { get; set; }
     }
 }
