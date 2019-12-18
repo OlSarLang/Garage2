@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Garage2.Extensions
 {
-    public class MyExtensions
+    public static class MyExtensions
     {
-        public MyExtensions()
-        {
-
-        }
-        public DateTime RoundDateTime(DateTime dt)
+        public static DateTime RoundDateTime(this DateTime dt)
         {
             DateTime rounded = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
             Debug.WriteLine($"{dt}");

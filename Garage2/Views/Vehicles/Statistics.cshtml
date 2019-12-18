@@ -1,0 +1,51 @@
+﻿@model Garage2.Models.StatisticsViewModel
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/vehicles.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h1>
+                Vehicles
+            </h1>
+            <hr />
+            <p>
+                <strong>Sedans: </strong>@Html.DisplayFor(model => model.AmountSedan)
+                <br />
+                <strong>SUVs: </strong>@Html.DisplayFor(model => model.AmountSUV)
+                <br />
+                <strong>MCs: </strong>@Html.DisplayFor(model => model.AmountMC)
+                <br />
+                <strong>Buses: </strong>@Html.DisplayFor(model => model.AmountBus)
+                <br />
+                <strong>Limousines: </strong>@Html.DisplayFor(model => model.AmountLimo)
+            </p>
+            <hr />
+            <h4>
+                Total amount of Wheels: <em>@Html.DisplayFor(model => model.TotalWheels)</em>
+            </h4>
+            <h4>
+                Parked vehicles: <em>@Html.DisplayFor(model => model.TotalVehicles)</em>
+            </h4>
+        </div>
+        <div class="col-md-6">
+            <h1>
+                Parking information
+            </h1>
+            <hr />
+            <h4>
+                Total parking time: <em>@Html.DisplayFor(model => model.TotalHours)hrs</em>
+            </h4>
+            <h4>
+                Total price from parking: <em>@Html.DisplayFor(model => model.TotalPrice):-</em>
+            </h4>
+        </div>
+    </div>
+<div>
+    <a asp-action="Index" tabindex="8" autofocus="autofocus">Back to List</a>
+</div>
